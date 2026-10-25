@@ -1,0 +1,802 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>南开大学天文协会</title>
+<meta name="description" content="南开大学天文协会，1996 年由苏宜教授指导创立。校园观测、流星雨观测、兴隆观测站研学、天津市大学生天文节承办。">
+<meta name="theme-color" content="#07040e">
+<meta name="author" content="Nankai University Astronomy Association">
+<link rel="icon" href="assets/img/favicon-64.png" sizes="64x64" type="image/png">
+<link rel="icon" href="assets/img/favicon-192.png" sizes="192x192" type="image/png">
+<link rel="apple-touch-icon" href="assets/img/favicon-192.png">
+<meta property="og:type" content="website">
+<meta property="og:title" content="南开大学天文协会">
+<meta property="og:description" content="1996 年由苏宜教授指导创立，2026 年三十周年。">
+<meta property="og:image" content="assets/img/og-cover.png">
+<link rel="stylesheet" href="assets/css/style.css?v=20261025c">
+<script>document.documentElement.classList.add("js");</script>
+</head>
+<body id="top">
+<a class="skip" href="#main">跳到主要内容</a>
+<div class="page-frame" aria-hidden="true"></div>
+<div class="progress" aria-hidden="true"><i id="progressBar"></i></div>
+<div class="cursor-glow" id="cursorGlow" aria-hidden="true"></div>
+<div class="ring" id="cursorRing" aria-hidden="true"></div>
+<canvas id="skyField" class="sky-field" aria-hidden="true"></canvas>
+<div class="milkyway" aria-hidden="true"></div>
+<div class="aurora" aria-hidden="true"><i></i><i></i><i></i></div>
+<div class="bloom" aria-hidden="true"></div>
+<div class="starchart" aria-hidden="true"></div>
+<div class="orbits" aria-hidden="true">
+  <i class="orbits__ring orbits__ring--1"></i>
+  <i class="orbits__ring orbits__ring--2"></i>
+  <i class="orbits__ring orbits__ring--3"></i>
+  <b class="orbits__dot orbits__dot--1"></b>
+  <b class="orbits__dot orbits__dot--2"></b>
+</div>
+<div class="sparks" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+
+<header class="nav" id="nav">
+  <div class="nav__inner">
+    <a class="brand" href="#top" aria-label="南开大学天文协会 首页">
+      <img src="assets/img/logo-mark.png" alt="NKAA" class="brand__mark" width="44" height="36">
+      <span class="brand__text">
+        <b>南开大学天文协会</b>
+        <i>NANKAI UNIVERSITY ASTRONOMY ASSOCIATION</i>
+      </span>
+    </a>
+    <nav class="nav__links" id="navLinks" aria-label="主导航">
+      <a href="#about">关于</a>
+      <a href="#activities">活动</a>
+      <a href="#merch">文创</a>
+      <a href="#join">加入</a>
+      <a href="#gallery">画廊</a>
+      <a href="#links">导航</a>
+      <a class="nav__cta" href="#contact">联系我们</a>
+      <span class="nav__note">1996—2026<br>南开大学 八里台 津南</span>
+    </nav>
+    <button class="burger" id="burger" aria-label="打开导航菜单" aria-expanded="false" aria-controls="navLinks">
+      <span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<main id="main">
+<nav class="rail" id="rail" aria-label="页面目录">
+  <a href="#about">关于</a>
+  <a href="#activities">活动</a>
+  <a href="#merch">文创</a>
+  <a href="#join">加入</a>
+  <a href="#gallery">画廊</a>
+  <a href="#links">导航</a>
+  <a href="#contact">联系</a>
+</nav>
+
+<!-- ============ HERO ============ -->
+<section class="hero" aria-label="南开大学天文协会">
+  <canvas id="sky" aria-hidden="true"></canvas>
+  <div class="hero__frame" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+  <svg class="moon" viewBox="0 0 64 64" aria-hidden="true">
+    <defs>
+      <linearGradient id="moonGrad" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0" stop-color="#fdf3ff"/>
+        <stop offset=".6" stop-color="#e6c8f4"/>
+        <stop offset="1" stop-color="#b78cd0"/>
+      </linearGradient>
+      <mask id="moonMask">
+        <rect width="64" height="64" fill="#fff"/>
+        <circle cx="42" cy="30" r="22" fill="#000"/>
+      </mask>
+    </defs>
+    <circle cx="30" cy="32" r="24" fill="url(#moonGrad)" mask="url(#moonMask)"/>
+  </svg>
+  <div class="hero__grid">
+    <canvas class="hero__dust" id="heroDust" aria-hidden="true"></canvas>
+    <div class="hero__text">
+      <p class="kicker reveal">1996—2026，三十周年</p>
+      <h1 class="hero__title reveal">
+        <span class="hero__line">南开大学</span>
+        <span class="hero__line hero__line--gold">天文协会</span>
+      </h1>
+      <div class="hero__deco reveal" aria-hidden="true">
+        <span class="hero__deco-line"></span>
+        <svg class="hero__deco-mark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
+          <circle cx="12" cy="12" r="3.2"/>
+          <ellipse cx="12" cy="12" rx="10" ry="4.2" transform="rotate(-24 12 12)"/>
+        </svg>
+        <span class="hero__deco-line"></span>
+      </div>
+      <p class="hero__slogan reveal">宇宙那么大，一起去看看。</p>
+      <div class="hero__actions reveal">
+        <a class="btn btn--gold" href="#about">了解协会<span>&rarr;</span></a>
+        <a class="btn btn--ghost" href="#join">加入我们</a>
+      </div>
+      <div class="hero__make reveal">
+        <button class="hero__make-btn" id="makeConstellation" type="button">
+          <span class="hero__make-star" aria-hidden="true">✦</span> 生成一个星座
+        </button>
+        <span class="hero__make-hint">或者，直接点亮夜空</span>
+      </div>
+    </div>
+
+    <div class="hero__orbit" aria-hidden="true">
+      <div class="hero__consts">
+        <!-- 北斗七星 -->
+        <svg class="hero__const const--dipper" viewBox="0 0 100 100" fill="none">
+          <g stroke="rgba(226,206,255,.30)" stroke-width=".62" stroke-linecap="round">
+            <path d="M30 16 L20 40 L38 52 L46 32 L30 16"/>
+            <path d="M46 32 L62 28 L76 20 L90 8"/>
+          </g>
+          <g fill="#e8dcff">
+            <circle cx="30" cy="16" r="1.35"/><circle cx="20" cy="40" r="1.25"/>
+            <circle cx="38" cy="52" r="1.25"/><circle cx="46" cy="32" r="1.0"/>
+            <circle cx="62" cy="28" r="1.35"/><circle cx="76" cy="20" r="1.55"/>
+            <circle cx="90" cy="8" r="1.45"/>
+          </g>
+        </svg>
+
+        <!-- 猎户座 -->
+        <svg class="hero__const const--orion" viewBox="0 0 100 100" fill="none">
+          <g stroke="rgba(226,206,255,.26)" stroke-width=".58" stroke-linecap="round">
+            <path d="M28 18 L40 48 M66 14 L64 44 M40 48 L52 46 L64 44 M40 48 L36 84 M64 44 L72 82 M28 18 L66 14 M36 84 L72 82"/>
+          </g>
+          <g fill="#e8dcff">
+            <circle cx="28" cy="18" r="1.05"/><circle cx="66" cy="14" r="1.25"/>
+            <circle cx="40" cy="48" r="1.25"/><circle cx="52" cy="46" r="1.25"/>
+            <circle cx="64" cy="44" r="1.25"/><circle cx="36" cy="84" r="1.1"/>
+            <circle cx="72" cy="82" r="1.55"/>
+          </g>
+        </svg>
+
+        <!-- 仙后座 -->
+        <svg class="hero__const const--cas" viewBox="0 0 100 100" fill="none">
+          <g stroke="rgba(226,206,255,.28)" stroke-width=".62" stroke-linecap="round">
+            <path d="M10 34 L32 62 L50 30 L70 60 L90 28"/>
+          </g>
+          <g fill="#e8dcff">
+            <circle cx="10" cy="34" r="1.2"/><circle cx="32" cy="62" r="1.35"/>
+            <circle cx="50" cy="30" r="1.2"/><circle cx="70" cy="60" r="1.2"/>
+            <circle cx="90" cy="28" r="1.0"/>
+          </g>
+        </svg>
+
+        <!-- 天鹅座 -->
+        <svg class="hero__const const--cygnus" viewBox="0 0 100 100" fill="none">
+          <g stroke="rgba(226,206,255,.22)" stroke-width=".58" stroke-linecap="round">
+            <path d="M50 8 L50 44 L50 90 M16 54 L50 44 L84 32"/>
+          </g>
+          <g fill="#e8dcff">
+            <circle cx="50" cy="8" r="1.55"/><circle cx="50" cy="44" r="1.2"/>
+            <circle cx="50" cy="90" r="1.05"/><circle cx="16" cy="54" r="1.05"/>
+            <circle cx="84" cy="32" r="1.05"/>
+          </g>
+        </svg>
+
+        <!-- 天琴座 -->
+        <svg class="hero__const const--lyra" viewBox="0 0 100 100" fill="none">
+          <g stroke="rgba(226,206,255,.24)" stroke-width=".58" stroke-linecap="round">
+            <path d="M34 10 L44 30 M44 30 L64 24 L68 54 L50 60 L44 30 M68 54 L50 60"/>
+          </g>
+          <g fill="#e8dcff">
+            <circle cx="34" cy="10" r="1.05"/><circle cx="44" cy="30" r="1.0"/>
+            <circle cx="64" cy="24" r="0.95"/><circle cx="68" cy="54" r="1.0"/>
+            <circle cx="50" cy="60" r="0.95"/>
+          </g>
+        </svg>
+      </div>
+
+      <div class="ring ring--1"></div>
+      <div class="ring ring--2"></div>
+      <div class="ring ring--3"></div>
+      <div class="planet planet--seal"><img src="assets/img/badge.png" alt="南开大学天文协会会徽"></div>
+      <div class="orbit-dot"></div>
+      <div class="orbit-dot orbit-dot--2"></div>
+      <div class="ufo" aria-hidden="true">
+        <span class="ufo__arm"><span class="ufo__craft"><i></i></span></span>
+      </div>
+      <svg class="constellation" viewBox="0 0 100 100" fill="none">
+        <!-- 天蝎座 -->
+        <g stroke="rgba(230,198,242,.34)" stroke-width=".55" stroke-linecap="round">
+          <path d="M14 12 L22 20 L30 28 L38 44 L46 60 L58 72 L72 78 L84 72 L90 60"/>
+          <path d="M22 20 L16 8 M22 20 L30 8"/>
+        </g>
+        <g fill="#e6c6f2">
+          <circle cx="14" cy="12" r="1.15"/><circle cx="22" cy="20" r="1.3"/>
+          <circle cx="30" cy="28" r="1.9"/><circle cx="38" cy="44" r="1.15"/>
+          <circle cx="46" cy="60" r="1.2"/><circle cx="58" cy="72" r="1.1"/>
+          <circle cx="72" cy="78" r="1.25"/><circle cx="84" cy="72" r="1.1"/>
+          <circle cx="90" cy="60" r="1.15"/>
+        </g>
+      </svg>
+    </div>
+  </div>
+
+  <div class="hero__foot">
+    <dl class="hero__meta">
+      <div><dt>创立</dt><dd>1996 年，苏宜教授指导</dd></div>
+      <div><dt>校区</dt><dd>八里台、津南</dd></div>
+      <div><dt>会员</dt><dd>2026 年 548 人</dd></div>
+    </dl>
+  </div>
+</section>
+
+<!-- ============ ABOUT ============ -->
+<section class="section" id="about">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <h2 class="sec-head__title">关于我们</h2>
+    </div>
+    <p class="sec-lede reveal">三十年，很多个晚上就这样交给了头顶那片天。</p>
+
+    <div class="about">
+      <div class="about__lead reveal">
+        <p class="lead">学术型社团，下设活动部、宣传部、科普部。2026 年注册会员 548 人。</p>
+        <p class="about__lead2"><span>社团宗旨</span>道穹宇 · 树科学 · 气自由</p>
+        <figure class="seal seal--mark">
+          <img src="assets/img/logo-mark.png" alt="NKAA 徽标" width="120" height="98">
+        </figure>
+      </div>
+      <div class="about__body">
+        <p class="about__log reveal">
+          1996 年，苏宜教授在南开园里办起了这个社团。三十年间换过很多届人，中间也经历过冷清的时候，
+          有过一年到头办不了几场活动的年份。后来一届一届接上来，又重新热闹了：2025 年办了 25 场，
+          平均每两周一次。
+        </p>
+        <p class="about__log reveal">
+          天津市大学生天文节从 1999 年办到现在，协会是承办方之一。2025 年承办了天文知识竞赛，
+          拿了知识竞赛一等奖和优秀社团奖；也和国家天文台兴隆观测站保持着每学期一次的研学。
+          公用望远镜分布在八里台和津南两个校区，会员可以免费借用，不会用有人教。
+        </p>
+        <blockquote class="about__lyric reveal">
+          有人在新开湖边第一次看清月球的环形山；<br>
+          有人在宿舍楼下守着，等一颗流星划过整片天；<br>
+          有人在兴隆的山顶上裹着睡袋等到凌晨；<br>
+          也有人只是路过，抬头看了一眼，就留了下来。
+          <span>这些夜晚没有名字，一年一年，攒成了三十年。</span>
+        </blockquote>
+      </div>
+    </div>
+
+    <ul class="stats">
+      <li class="reveal"><b>1996</b><span>苏宜教授指导创立</span></li>
+      <li class="reveal"><b>30<i>年</i></b><span>1996 年至今</span></li>
+      <li class="reveal"><b>548<i>人</i></b><span>2026 年注册会员</span></li>
+      <li class="reveal"><b>25<i>场</i></b><span>2025 年活动</span></li>
+    </ul>
+
+    <div class="honors reveal">
+      <span class="honors__label">第二十五届天津市大学生天文节，2025 年</span>
+      <ul>
+        <li>优秀社团</li>
+        <li>天文知识竞赛一等奖</li>
+        <li>天文摄影比赛一等奖两项</li>
+        <li>创新作品科普教育类二等奖、三等奖</li>
+        <li>优秀指导老师</li>
+        <li>优秀社团骨干</li>
+      </ul>
+    </div>
+    <div class="press reveal">
+      <span class="press__label">媒体报道</span>
+      <ul class="press__list">
+        <li><a href="https://news.nankai.edu.cn/ywsd/system/2026/07/15/030073658.shtml" target="_blank" rel="noopener">
+          <time>2026.07</time><b>南开大学苏宜教授获国际小行星永久命名</b><span>新闻网 · 21272 号「苏宜星」</span></a></li>
+        <li><a href="https://news.nankai.edu.cn/dcxy/system/2026/07/30/030073809.shtml" target="_blank" rel="noopener">
+          <time>2026.07</time><b>从观测到科普：南开学生社团亮相中国天文学会天文创新作品征集活动</b><span>新闻网</span></a></li>
+        <li><a href="https://news.nankai.edu.cn/zhxw/system/2026/05/11/030072618.shtml" target="_blank" rel="noopener">
+          <time>2026.05</time><b>南开大学天文协会三十周年庆典举行</b><span>新闻网</span></a></li>
+        <li><a href="https://mp.weixin.qq.com/s?__biz=MzA4NzAwNDEyMg==&amp;mid=2656274392&amp;idx=1&amp;sn=17d2509b39f417a20c8f1a02a14bcefe" target="_blank" rel="noopener">
+          <time>2026.01</time><b>快许愿！2026 第一场流星雨，南开陪你看</b><span>公众号推送</span></a></li>
+        <li><a href="https://news.nankai.edu.cn/dcxy/system/2024/09/18/030063441.shtml" target="_blank" rel="noopener">
+          <time>2024.09</time><b>南开学生社团中秋节开展天文之美科普活动</b><span>新闻网</span></a></li>
+      </ul>
+    </div>
+
+  </div>
+</section>
+
+<!-- ============ SUYI ============ -->
+<section class="section" id="suyi">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <h2 class="sec-head__title">苏宜星</h2>
+    </div>
+    <p class="sec-lede reveal">2026 年 7 月，一颗编号 21272 的小行星有了名字。</p>
+
+    <div class="suyi__intro">
+      <div class="suyi__copy reveal">
+        <p class="lead">（21272）Suyi，中文名「苏宜星」。1996 年 9 月 18 日由兴隆观测站发现，2026 年 7 月由国际天文学联合会小天体命名工作组正式命名。</p>
+        <p>苏宜教授在南开讲授天文通识课几十年。1996 年，也正是他指导创立了这个社团。</p>
+        <p>于是这件事对我们有点特别：协会的第三十年，当年在讲台上带大家认星的人，名字被写进了星表。以后再说起「苏宜星」，它不只是新闻里的一行字。</p>
+        <div class="suyi__links">
+          <a href="https://news.nankai.edu.cn/ywsd/system/2026/07/15/030073658.shtml" target="_blank" rel="noopener">南开大学报道 <span aria-hidden="true">↗</span></a>
+          <a href="https://wgsbn-iau.org/files/Bulletins/V006/WGSBNBull_V006_010.pdf" target="_blank" rel="noopener">WGSBN 命名公告 <span aria-hidden="true">↗</span></a>
+          <a href="https://ssd.jpl.nasa.gov/tools/sbdb_lookup.html#/?sstr=21272" target="_blank" rel="noopener">JPL 小行星数据库 <span aria-hidden="true">↗</span></a>
+          <a href="sources.html">数据与方法 <span aria-hidden="true">↗</span></a>
+        </div>
+      </div>
+      <dl class="suyi__facts reveal">
+        <div><dt>永久编号</dt><dd>21272</dd></div>
+        <div><dt>临时编号</dt><dd>1996 SA1</dd></div>
+        <div><dt>发现</dt><dd>1996.09.18 · 兴隆</dd></div>
+        <div><dt>命名公告</dt><dd>2026.07.06 · WGSBN</dd></div>
+        <div><dt>轨道半长轴</dt><dd>2.2166 <i>AU</i></dd></div>
+        <div><dt>公转周期</dt><dd>1205.4 <i>天</i></dd></div>
+      </dl>
+    </div>
+
+    <div class="suyi-sim reveal" id="suyi-simulator">
+      <div class="suyi-sim__head">
+        <span class="suyi-sim__state"><i class="suyi-sim__dot" aria-hidden="true"></i><span id="suyi-mode">当前时刻推算</span></span>
+        <time id="suyi-time">正在计算轨道…</time>
+      </div>
+      <div class="suyi-sim__body">
+        <div class="suyi-visual">
+          <div class="suyi-stage" id="suyi-stage">
+            <canvas id="suyi-canvas" tabindex="0" role="img" aria-label="苏宜星交互轨道模拟"></canvas>
+            <div class="suyi-view" role="group" aria-label="轨道视角">
+              <button id="suyi-top" type="button">俯视</button>
+              <button id="suyi-oblique" type="button">立体</button>
+              <button id="suyi-zoom-in" type="button" aria-label="放大轨道">＋</button>
+              <button id="suyi-zoom-out" type="button" aria-label="缩小轨道">－</button>
+            </div>
+            <p class="suyi-stage__note">日心黄道坐标 / J2000<br>拖动旋转 · 按钮缩放</p>
+          </div>
+          <div class="suyi-readout">
+            <span>日心距离 <b id="suyi-distance">— AU</b></span>
+            <span>星体大小与光晕为可视化放大</span>
+          </div>
+          <p class="suyi-coords">日心黄道坐标 / AU　<span id="suyi-position">—</span></p>
+          <div class="suyi-controls">
+            <button id="suyi-play" type="button" aria-pressed="false">暂停时间 Ⅱ</button>
+            <button id="suyi-demo" type="button">加速公转 ▷▷</button>
+            <button id="suyi-now" type="button">回到现在 ↺</button>
+            <label class="sr-only" for="suyi-speed">轨道播放速度</label>
+            <select id="suyi-speed">
+              <option value="1">实时 / 1×</option>
+              <option value="86400">1 天 / 秒</option>
+              <option value="604800">7 天 / 秒</option>
+              <option value="2592000">30 天 / 秒</option>
+            </select>
+          </div>
+          <div class="suyi-date">
+            <label for="suyi-date">模拟日期 / UTC</label>
+            <input type="date" id="suyi-date" min="2021-06-09" max="2031-06-08">
+            <label class="sr-only" for="suyi-timeline">拖动调整模拟日期</label>
+            <input type="range" id="suyi-timeline" min="0" max="3651" value="1964" step="1">
+          </div>
+        </div>
+        <aside class="suyi-params">
+          <p class="suyi-params__kicker">ORBITAL ELEMENTS</p>
+          <h3>苏宜星的轨道档案</h3>
+          <dl class="suyi-params__grid" id="suyi-parameters"></dl>
+          <dl class="suyi-params__grid suyi-params__grid--dim" id="suyi-extra"></dl>
+          <p class="suyi-params__src" id="suyi-model-source">星历文件未加载：当前使用轨道要素近似推算。</p>
+          <a class="suyi-params__more" href="sources.html">数据与方法 <span aria-hidden="true">↗</span></a>
+        </aside>
+      </div>
+    </div>
+    <p class="suyi__credit reveal">轨道数据来自 JPL SBDB（轨道解 #39）与 Horizons 日心状态矢量；紫线为历元瞬时轨道，不是完整摄动轨迹。<br>星体尺寸与光晕为可视化放大。不用于正式观测指向。</p>
+  </div>
+</section>
+
+<!-- ============ ACTIVITIES ============ -->
+<section class="section section--alt" id="activities">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <h2 class="sec-head__title">活动</h2>
+    </div>
+    <p class="sec-lede reveal">有些夜晚，值得专门出门一趟。</p>
+
+    <div class="cards">
+      <article class="card reveal">
+        <div class="card__icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 2.9l2.35 6.75L21.1 12l-6.75 2.35L12 21.1l-2.35-6.75L2.9 12l6.75-2.35z"/>
+            <circle cx="18.6" cy="5.4" r=".9" fill="currentColor" stroke="none" opacity=".7"/>
+          </svg>
+        </div>
+        <h3>天津市大学生天文节</h3>
+        <span class="card__more">查看详情<span>&rarr;</span></span>
+        <p>天津各高校天文社团轮流承办，协会是承办方之一。2025 年承办了天文知识竞赛。</p>
+        <span class="card__tag">每年 11 月至 12 月</span>
+      </article>
+
+      <article class="card reveal">
+        <div class="card__icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M4.3 15.1 14.9 4.5a1 1 0 0 1 1.42 0l2.6 2.6a1 1 0 0 1 0 1.42L8.32 19.1z"/>
+            <path d="M8.3 19.1 6.5 21.3M8.3 19.1l3.2 2.2M8.3 19.1l1.2-3.1"/>
+            <circle cx="19.7" cy="4.4" r=".85" fill="currentColor" stroke="none" opacity=".65"/>
+          </svg>
+        </div>
+        <h3>路边天文</h3>
+        <span class="card__more">查看详情<span>&rarr;</span></span>
+        <p>在新开湖边和教学楼前架望远镜，路过就能看，不用报名。</p>
+        <span class="card__tag">晴天周末</span>
+      </article>
+
+      <article class="card reveal">
+        <div class="card__icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3.2 4.6 9.9 11.3"/><circle cx="11.4" cy="12.8" r="1.25"/>
+            <path d="M3.4 11.2 6.6 14.4"/><circle cx="7.6" cy="15.4" r=".95"/>
+            <path d="M12.6 3.4 15 5.8"/><circle cx="15.9" cy="6.7" r=".85"/>
+            <path d="M3 20.6h18" opacity=".35"/>
+          </svg>
+        </div>
+        <h3>流星雨观测</h3>
+        <span class="card__more">查看详情<span>&rarr;</span></span>
+        <p>英仙、双子、狮子、猎户、天琴。包车、保险和应急预案都有，每年两三百人次。</p>
+        <span class="card__tag">每年 5 场</span>
+      </article>
+
+      <article class="card reveal">
+        <div class="card__icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3.2 20.6h17.6"/>
+            <path d="M6.6 20.6v-5a5.4 5.4 0 0 1 10.8 0v5"/>
+            <path d="M12 10.1V6.2M10.4 6.2h3.2"/>
+            <path d="M3.2 17.4h3.4" opacity=".45"/>
+          </svg>
+        </div>
+        <h3>兴隆观测站研学</h3>
+        <span class="card__more">查看详情<span>&rarr;</span></span>
+        <p>国家天文台兴隆观测站。看专业望远镜怎么工作，也听站里的老师讲研究。</p>
+        <span class="card__tag">每学期 1 次</span>
+      </article>
+
+      <article class="card reveal">
+        <div class="card__icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3.7 6.3a2 2 0 0 1 2-2h12.6a2 2 0 0 1 2 2v6.9a2 2 0 0 1-2 2h-8.4l-4.4 3.5v-3.5h-.8a2 2 0 0 1-2-2z"/>
+            <path d="M7.6 7.7h8.8M7.6 10.9h5.4" opacity=".5"/>
+          </svg>
+        </div>
+        <h3>讲座和社课</h3>
+        <span class="card__more">查看详情<span>&rarr;</span></span>
+        <p>请天文领域的研究者和协会里的同学来讲，题目从恒星演化到天文摄影后期。苏宜教授编的《天文学新概论》是入门书。</p>
+        <span class="card__tag">每学期数场</span>
+      </article>
+
+      <article class="card reveal">
+        <div class="card__icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M2.7 8.7 12 4.1l9.3 4.6L12 13.3z"/>
+            <path d="M6.7 10.9v3.9c0 1.32 2.37 2.4 5.3 2.4s5.3-1.08 5.3-2.4v-3.9"/>
+            <path d="M21.3 8.7v5.1"/>
+          </svg>
+        </div>
+        <h3>科普进校园</h3>
+        <span class="card__more">查看详情<span>&rarr;</span></span>
+        <p>去中小学上课，也参加天津市科技馆的科普月和社区观测。</p>
+        <span class="card__tag">不定期</span>
+      </article>
+    </div>
+
+    <h3 class="sub-head reveal">近期活动</h3>
+    <p class="rom-line rom-line--tight reveal">出门前先看一眼天，已经成了习惯。</p>
+    <ul class="upcoming reveal" id="upcomingList"></ul>
+
+    <h3 class="sub-head reveal">足迹</h3>
+    <ol class="timeline" id="journeyList"></ol>
+  </div>
+</section>
+
+<!-- ============ MERCH ============ -->
+<section class="section" id="merch">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <h2 class="sec-head__title">文创</h2>
+    </div>
+
+    <div class="merch">
+      <div class="merch__intro reveal">
+        <p class="lead">协会自己做的一些周边。</p>
+        <p class="rom-line">把看过的星空，做成能带在身上的形状。</p>
+        <p>
+          纪念章、徽章、帆布袋、文化衫、卡套和明信片。图案都是会员自己拍的照片和设计的：
+          主楼剪影、月面，还有社团形象 <em>Ankaa</em>。后面还会陆续做新的。
+        </p>
+        <p class="merch__note">部分实物是招新奖品，文创随活动限量发放。</p>
+      </div>
+
+      <ul class="merch__grid">
+        <li class="reveal">
+          <figure>
+            <img src="assets/img/merch/01-coin.jpg" alt="纪念章" loading="lazy" width="1185" height="1200">
+            <figcaption><b>纪念章</b><span>2026</span></figcaption>
+          </figure>
+        </li>
+        <li class="reveal">
+          <figure>
+            <img src="assets/img/merch/02-pins.jpg" alt="天体主题金属徽章" loading="lazy" width="800" height="800">
+            <figcaption><b>天体徽章</b><span>2026</span></figcaption>
+          </figure>
+        </li>
+        <li class="reveal">
+          <figure>
+            <img src="assets/img/merch/03-moonlamp.jpg" alt="月球灯" loading="lazy" width="882" height="882">
+            <figcaption><b>月球灯</b><span>招新奖品</span></figcaption>
+          </figure>
+        </li>
+        <li class="reveal">
+          <figure>
+            <img src="assets/img/merch/04-planets.jpg" alt="太阳系星球模型" loading="lazy" width="800" height="800">
+            <figcaption><b>星球模型</b><span>招新奖品</span></figcaption>
+          </figure>
+        </li>
+      </ul>
+    </div>
+
+    <div class="ankaa reveal">
+      <img src="assets/img/merch/05-ankaa.jpg" alt="社团虚拟形象 Ankaa" loading="lazy" width="953" height="1300">
+      <div>
+        <h3>Ankaa，安卡</h3>
+        <p>
+          Ankaa 是凤凰座 α 星的名字。2026 年开始作为协会的虚拟形象，
+          出现在公众号和小红书的插图里，也印在了这一批文创上。
+        </p>
+        <p class="rom-line">她替我们先去看了一眼那些很远的星星。</p>
+      </div>
+      <figure class="ankaa__qr">
+        <img src="assets/img/qr-ankaa.png" alt="安卡表情包二维码" width="840" height="840" loading="lazy">
+        <figcaption>扫码用安卡表情包</figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<!-- ============ JOIN ============ -->
+<section class="section section--alt" id="join">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <h2 class="sec-head__title">加入我们</h2>
+    </div>
+
+    <div class="join">
+      <div class="join__copy">
+        <p class="lead reveal">协会的望远镜对会员免费开放，不会用有人教。</p>
+        <p class="rom-line reveal">第一次抬头，就算开始了。</p>
+        <p class="reveal">每年九月招新，其他时间也欢迎来参加活动，没有门槛。</p>
+        <ol class="steps">
+          <li class="reveal"><span>01</span><div><b>扫码关注公众号</b><p>活动预告都在这里发，小红书和 B 站更新作品和记录。</p></div></li>
+          <li class="reveal"><span>02</span><div><b>报名和见面会</b><p>九月招新季填表入会，参加迎新会认识同好。</p></div></li>
+          <li class="reveal"><span>03</span><div><b>来一次观测</b><p>人到就行，器材和讲解由协会提供。</p></div></li>
+        </ol>
+      </div>
+
+      <aside class="join__side reveal">
+        <div class="find">
+          <h4>找到我们</h4>
+          <div class="find__row find__row--qr">
+            <div>
+              <b>微信公众号</b>
+              <i>搜索「南开天协」，活动预告和推送都发在这里</i>
+            </div>
+            <img class="find__qr" src="assets/img/qr-wechat.png" alt="公众号 南开天协 二维码" width="840" height="840">
+          </div>
+          <a class="find__row" href="https://www.xiaohongshu.com/user/profile/501080634" target="_blank" rel="noopener">
+            <b>小红书</b>
+            <i>南开大学天文协会，小红书号 501080634</i>
+          </a>
+          <a class="find__row" href="https://space.bilibili.com/194652841" target="_blank" rel="noopener">
+            <b>B 站</b>
+            <i>南开大学天文协会，UID 194652841</i>
+          </a>
+        </div>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<!-- ============ GALLERY ============ -->
+<section class="section section--alt" id="gallery">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <h2 class="sec-head__title">画廊</h2>
+    </div>
+    <h3 class="sub-head sub-head--tight reveal">摄影作品</h3>
+    <p class="gallery__note reveal">协会成员自己拍的天体照片。点开可以看拍摄时间、地点和活动，方向键翻页。<em class="rom">这些光走了很远很远，才抵达你的眼睛。</em></p>
+    <div class="gallery" id="galleryAstro"></div>
+
+    <h3 class="sub-head reveal">活动记录</h3>
+    <p class="gallery__note reveal">观测、比赛、招新、上课的现场。点开同样有时间和地点。<em class="rom">同一片天，不同的人在不同的地方抬头。</em></p>
+    <div class="gallery gallery--events" id="galleryEvent"></div>
+    <noscript><p class="gallery__note">画廊需要浏览器允许 JavaScript。</p></noscript>
+  </div>
+</section>
+
+<!-- ============ LINKS ============ -->
+<section class="section section--alt" id="links">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <h2 class="sec-head__title">天文导航</h2>
+    </div>
+    <p class="gallery__note reveal">五个方向，三十五个站。点一个方向，下面就换成那一组。<em class="rom">看得越远，越清楚自己站在哪里。</em></p>
+
+    <div class="tabs reveal" id="navTabs">
+      <div class="tabs__bar" role="tablist" aria-label="天文导航分类">
+        <button class="tabs__tab is-active" type="button" role="tab" id="navTab0" aria-controls="navPanel0" aria-selected="true">今晚看什么<span>5</span></button>
+        <button class="tabs__tab" type="button" role="tab" id="navTab1" aria-controls="navPanel1" aria-selected="false">参与发现<span>8</span></button>
+        <button class="tabs__tab" type="button" role="tab" id="navTab2" aria-controls="navPanel2" aria-selected="false">查数据<span>10</span></button>
+        <button class="tabs__tab" type="button" role="tab" id="navTab3" aria-controls="navPanel3" aria-selected="false">变星与太阳<span>6</span></button>
+        <button class="tabs__tab" type="button" role="tab" id="navTab4" aria-controls="navPanel4" aria-selected="false">后期与器材<span>6</span></button>
+      </div>
+      <div class="tabs__body">
+        <section class="tabs__panel is-active" id="navPanel0" role="tabpanel" aria-labelledby="navTab0">
+          <p class="tabs__note">出门之前先看一眼这几处</p>
+          <ul class="tabs__links">
+            <li><a href="http://interesting-sky.china-vo.org/" target="_blank" rel="noopener"><b>有趣天文奇观</b><i>每月天象、流星雨、日月食的预报</i><em>&nearr;</em></a></li>
+            <li><a href="https://stellarium-web.org/" target="_blank" rel="noopener"><b>Stellarium Web</b><i>浏览器里的实时星图</i><em>&nearr;</em></a></li>
+            <li><a href="https://www.darkmap.cn/" target="_blank" rel="noopener"><b>光污染地图</b><i>挑一个够黑的地方</i><em>&nearr;</em></a></li>
+            <li><a href="https://www.meteoblue.com/" target="_blank" rel="noopener"><b>Meteoblue</b><i>云量和视宁度</i><em>&nearr;</em></a></li>
+            <li><a href="https://telescopius.com/" target="_blank" rel="noopener"><b>Telescopius</b><i>查深空目标的构图和视野</i><em>&nearr;</em></a></li>
+          </ul>
+        </section>
+        <section class="tabs__panel" id="navPanel1" role="tabpanel" aria-labelledby="navTab1">
+          <p class="tabs__note">拿公开数据做一点真的事</p>
+          <ul class="tabs__links">
+            <li><a href="https://nadc.china-vo.org/psp/" target="_blank" rel="noopener"><b>PSP 公众超新星搜寻</b><i>对比新旧影像，找超新星候选体</i><em>&nearr;</em></a></li>
+            <li><a href="https://nadc.china-vo.org/lensfinder/cluster/" target="_blank" rel="noopener"><b>引力透镜搜寻</b><i>在天区影像里找强引力透镜</i><em>&nearr;</em></a></li>
+            <li><a href="https://nadc.china-vo.org/galaxymaze/dist/" target="_blank" rel="noopener"><b>星系迷宫</b><i>给星系形态分类</i><em>&nearr;</em></a></li>
+            <li><a href="https://www.zooniverse.org/projects/zookeeper/galaxy-zoo" target="_blank" rel="noopener"><b>Galaxy Zoo</b><i>Zooniverse 上的星系分类项目</i><em>&nearr;</em></a></li>
+            <li><a href="https://nadc.china-vo.org/huoliuxing/html/home.html" target="_blank" rel="noopener"><b>火流星目击报告</b><i>记录你看到的那颗火流星</i><em>&nearr;</em></a></li>
+            <li><a href="https://iasc.cosmosearch.org/" target="_blank" rel="noopener"><b>IASC 小行星搜寻</b><i>国际小行星搜寻合作</i><em>&nearr;</em></a></li>
+            <li><a href="https://science.nasa.gov/citizen-science/exoplanet-watch/" target="_blank" rel="noopener"><b>Exoplanet Watch</b><i>参与系外行星凌星观测</i><em>&nearr;</em></a></li>
+            <li><a href="https://science.nasa.gov/citizen-science/" target="_blank" rel="noopener"><b>NASA 公众科学</b><i>可以参与的科学项目总目录</i><em>&nearr;</em></a></li>
+          </ul>
+        </section>
+        <section class="tabs__panel" id="navPanel2" role="tabpanel" aria-labelledby="navTab2">
+          <p class="tabs__note">一个天体到底在哪、有多亮</p>
+          <ul class="tabs__links">
+            <li><a href="https://nadc.china-vo.org/" target="_blank" rel="noopener"><b>国家天文科学数据中心</b><i>数据、工具和公开项目</i><em>&nearr;</em></a></li>
+            <li><a href="https://www.china-vo.org/" target="_blank" rel="noopener"><b>中国虚拟天文台</b><i>在线天文工具总入口</i><em>&nearr;</em></a></li>
+            <li><a href="http://www.nao.cas.cn/" target="_blank" rel="noopener"><b>国家天文台</b><i>科研进展和兴隆观测站</i><em>&nearr;</em></a></li>
+            <li><a href="https://simbad.cds.unistra.fr/simbad/" target="_blank" rel="noopener"><b>SIMBAD 天体数据库</b><i>按名字查坐标、光谱和文献</i><em>&nearr;</em></a></li>
+            <li><a href="https://vizier.cds.unistra.fr/" target="_blank" rel="noopener"><b>VizieR 星表服务</b><i>检索公开星表</i><em>&nearr;</em></a></li>
+            <li><a href="https://aladin.cds.unistra.fr/AladinLite/" target="_blank" rel="noopener"><b>Aladin Lite</b><i>在浏览器里翻巡天影像</i><em>&nearr;</em></a></li>
+            <li><a href="https://ssd.jpl.nasa.gov/tools/sbdb_lookup.html" target="_blank" rel="noopener"><b>JPL 小天体数据库</b><i>小行星和彗星的轨道</i><em>&nearr;</em></a></li>
+            <li><a href="https://ssd.jpl.nasa.gov/horizons/" target="_blank" rel="noopener"><b>JPL Horizons 星历</b><i>查某个时刻天体的位置</i><em>&nearr;</em></a></li>
+            <li><a href="https://wgsbn-iau.org/" target="_blank" rel="noopener"><b>WGSBN 命名公告</b><i>小天体命名的官方公告，苏宜星也在里面</i><em>&nearr;</em></a></li>
+            <li><a href="https://www.minorplanetcenter.net/" target="_blank" rel="noopener"><b>MPC 小行星中心</b><i>小天体观测数据与近地天体</i><em>&nearr;</em></a></li>
+          </ul>
+        </section>
+        <section class="tabs__panel" id="navPanel3" role="tabpanel" aria-labelledby="navTab3">
+          <p class="tabs__note">恒星会变，太阳也不安静</p>
+          <ul class="tabs__links">
+            <li><a href="https://aavso.org/" target="_blank" rel="noopener"><b>AAVSO 变星协会</b><i>变星观测指南与数据提交</i><em>&nearr;</em></a></li>
+            <li><a href="https://vsx.aavso.org/" target="_blank" rel="noopener"><b>VSX 变星索引</b><i>按名字或位置查变星</i><em>&nearr;</em></a></li>
+            <li><a href="https://apps.aavso.org/lcg/" target="_blank" rel="noopener"><b>AAVSO 光变曲线</b><i>比较一颗星这些年的亮度</i><em>&nearr;</em></a></li>
+            <li><a href="https://www.spaceweather.gov/" target="_blank" rel="noopener"><b>NOAA 空间天气</b><i>耀斑、地磁暴和极光预报</i><em>&nearr;</em></a></li>
+            <li><a href="https://www.helioviewer.org/" target="_blank" rel="noopener"><b>Helioviewer</b><i>多波段的太阳影像</i><em>&nearr;</em></a></li>
+            <li><a href="https://www.sidc.be/SILSO/" target="_blank" rel="noopener"><b>SILSO 黑子数</b><i>两百多年的太阳活动记录</i><em>&nearr;</em></a></li>
+          </ul>
+        </section>
+        <section class="tabs__panel" id="navPanel4" role="tabpanel" aria-labelledby="navTab4">
+          <p class="tabs__note">拍完之后的事，以及别人怎么拍</p>
+          <ul class="tabs__links">
+            <li><a href="https://pixinsight.com/" target="_blank" rel="noopener"><b>PixInsight</b><i>天文影像处理的老牌平台</i><em>&nearr;</em></a></li>
+            <li><a href="https://siril.org/" target="_blank" rel="noopener"><b>Siril</b><i>免费开源的叠加与处理</i><em>&nearr;</em></a></li>
+            <li><a href="https://starnetastro.com/" target="_blank" rel="noopener"><b>StarNet</b><i>把星点和背景分开</i><em>&nearr;</em></a></li>
+            <li><a href="https://nighttime-imaging.com/" target="_blank" rel="noopener"><b>N.I.N.A.</b><i>自动化拍摄控制</i><em>&nearr;</em></a></li>
+            <li><a href="https://openphdguiding.org/" target="_blank" rel="noopener"><b>PHD2</b><i>导星软件</i><em>&nearr;</em></a></li>
+            <li><a href="https://astrobin.com/" target="_blank" rel="noopener"><b>AstroBin</b><i>看别人怎么拍、用什么拍</i><em>&nearr;</em></a></li>
+          </ul>
+        </section>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CONTACT ============ -->
+<section class="section section--contact" id="contact">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <h2 class="sec-head__title">联系我们</h2>
+    </div>
+
+    <div class="contact">
+      <div class="contact__main reveal">
+        <p class="lead">合作、投稿、捐设备，都可以找我们。</p>
+        <p class="contact__way">公众号后台留言，或者在小红书、B 站私信，都会有人看。</p>
+        <p class="contact__way">中小学和社区想办观测或讲座也可以联系。今年我们去了南大附中上课，也在天津市科技馆做过志愿服务。</p>
+        <p class="contact__poem reveal">天南海北，抬头是同一片天。</p>
+      </div>
+      <dl class="contact__list reveal">
+        <div><dt>地址</dt><dd>天津市南开区卫津路 94 号<br>南开大学八里台校区</dd></div>
+        <div><dt>校区</dt><dd>八里台、津南，两边都办活动</dd></div>
+        <div><dt>合作</dt><dd>天津市天文学会、天津市科技馆<br>国家天文台兴隆观测站</dd></div>
+        <div><dt>招新</dt><dd>每年九月，其他时候也欢迎来</dd></div>
+      </dl>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="foot">
+  <div class="wrap foot__inner">
+    <div class="foot__brand">
+      <img src="assets/img/logo-mark.png" alt="" width="38" height="31">
+      <div>
+        <b>南开大学天文协会</b>
+        <span>NANKAI UNIVERSITY ASTRONOMY ASSOCIATION</span>
+      </div>
+    </div>
+    <p class="foot__quote">道穹宇 · 树科学 · 气自由<span>1996—2026</span></p>
+    <p class="foot__poem">三十年了，我们还在抬头看。</p>
+    <div class="foot__legal">
+      <span>&copy; <span id="year">2026</span> NKAA</span>
+      <span class="dot">|</span>
+      <span>三十周年</span>
+      <span class="dot">|</span>
+      <a href="sources.html">资料出处</a>
+    </div>
+  </div>
+</footer>
+
+<div class="drawer" id="drawer" role="dialog" aria-modal="true" aria-labelledby="drawerTitle" hidden>
+  <div class="drawer__panel" id="drawerPanel">
+    <button class="drawer__close" id="drawerClose" aria-label="关闭">&times;</button>
+    <p class="drawer__kicker" id="drawerWhen"></p>
+    <h3 id="drawerTitle"></h3>
+    <p class="drawer__text" id="drawerText"></p>
+    <p class="drawer__text drawer__text--dim" id="drawerMore"></p>
+    <div class="drawer__photos" id="drawerPhotos"></div>
+    <a class="drawer__cta" href="#join">想参加？看看怎么加入<span>&rarr;</span></a>
+  </div>
+</div>
+
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="照片详情" hidden>
+  <button class="lightbox__close" id="lbClose" aria-label="关闭">&times;</button>
+  <div class="lightbox__body">
+    <figure class="lightbox__pic"><img id="lbImg" alt=""></figure>
+    <div class="lightbox__info">
+      <h3 id="lbTitle"></h3>
+      <dl id="lbMeta"></dl>
+      <p class="lightbox__count" id="lbCount"></p>
+      <p class="lightbox__hint">方向键翻页，Esc 关闭</p>
+    </div>
+  </div>
+</div>
+
+
+<!-- ============ 安卡 · 社团小助手 ============ -->
+<div class="anka" id="anka">
+  <section class="anka__panel" id="ankaPanel" role="dialog" aria-modal="false" aria-labelledby="ankaTitle" hidden>
+    <header class="anka__head">
+      <span class="anka__avatar"><img src="assets/img/anka-avatar.png" alt="" width="40" height="40"></span>
+      <span class="anka__id">
+        <strong id="ankaTitle">安卡</strong>
+        <span>社团小助手 · 只聊社团与天文</span>
+      </span>
+      <button class="anka__close" id="ankaClose" type="button" aria-label="关闭聊天">&times;</button>
+    </header>
+    <div class="anka__log" id="ankaLog" role="log" aria-live="polite" aria-relevant="additions"></div>
+    <div class="anka__chips">
+      <button type="button" data-ask="怎么加入天文协会？">怎么加入</button>
+      <button type="button" data-ask="最近有什么活动？">最近活动</button>
+      <button type="button" data-ask="今晚适合看什么？">今晚看什么</button>
+      <button type="button" data-ask="苏宜星是什么？">苏宜星</button>
+    </div>
+    <div class="anka__form">
+      <textarea class="anka__input" id="ankaInput" rows="1" maxlength="200" placeholder="问我社团或天文的事…" aria-label="输入问题"></textarea>
+      <button class="anka__send" id="ankaSend" type="button" aria-label="发送">发送</button>
+    </div>
+    <p class="anka__hint" id="ankaHint">回答由 AI 生成，可能出错；只限社团与天文。</p>
+  </section>
+  <button class="anka__fab" id="ankaBtn" type="button" aria-controls="ankaPanel" aria-expanded="false" aria-label="和安卡聊聊社团与天文">
+    <span class="anka__halo" aria-hidden="true"></span>
+    <img class="anka__img" src="assets/img/anka.png" alt="" width="326" height="560">
+  </button>
+</div>
+
+<script src="assets/js/suyi-data.js?v=20261025"></script>
+<script src="assets/js/suyi-ephemeris.js?v=20261025"></script>
+<script src="assets/js/suyi-orbit.js?v=20261025"></script>
+<script src="assets/js/data.js?v=20261025"></script>
+<script src="assets/js/main.js?v=20261025f"></script>
+<script src="assets/js/anka-chat.js?v=20261025c"></script>
+</body>
+</html>

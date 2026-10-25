@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>页面走丢了 · NKAA</title>
+<meta name="robots" content="noindex">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2307040e'/%3E%3Ccircle cx='32' cy='34' r='15' fill='none' stroke='%23c473d6' stroke-opacity='.5' stroke-width='2'/%3E%3Cellipse cx='32' cy='34' rx='24' ry='9' fill='none' stroke='%23c473d6' stroke-opacity='.85' stroke-width='2' transform='rotate(-26 32 34)'/%3E%3Ccircle cx='32' cy='34' r='5.5' fill='%23e6c6f2'/%3E%3C/svg%3E" type="image/svg+xml">
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{
+    min-height:100svh;display:grid;place-items:center;padding:32px;
+    font-family:"PingFang SC","Microsoft YaHei","Hiragino Sans GB",system-ui,sans-serif;
+    color:#f4eefa;text-align:center;
+    background:radial-gradient(120% 90% at 50% 20%,#1c0c2e 0%,#0b0616 50%,#06030c 100%);
+  }
+  .wrap{max-width:520px}
+  .code{font-family:Optima,Palatino,Georgia,serif;font-size:clamp(72px,18vw,128px);line-height:1;letter-spacing:.06em;
+        background:linear-gradient(180deg,#f9efff,#c473d6);-webkit-background-clip:text;background-clip:text;color:transparent}
+  h1{font-size:20px;letter-spacing:.2em;font-weight:500;margin:18px 0 14px}
+  p{color:#b3a4c9;font-size:14px;line-height:1.9}
+  a{display:inline-block;margin-top:32px;padding:13px 28px;border-radius:999px;
+    background:linear-gradient(180deg,#ad16a0,#7b0068);color:#fff;font-size:13px;letter-spacing:.12em;text-decoration:none;font-weight:500}
+  a:hover{filter:brightness(1.1)}
+  .dot{width:5px;height:5px;border-radius:50%;background:#c473d6;display:inline-block;margin:0 10px;vertical-align:middle;opacity:.7}
+  .sub{font-family:Optima,Palatino,Georgia,serif;font-size:11px;letter-spacing:.3em;color:#80719a;margin-top:26px}
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="code">404</div>
+    <h1>这颗星不在此星图</h1>
+    <p>你要找的页面可能已经移走，或者从来没有存在过。<span class="dot"></span>回到首页重新出发吧。</p>
+    <a id="home" href="./">返回首页</a>
+    <div class="sub">NANKAI UNIVERSITY ASTRONOMY ASSOCIATION</div>
+  </div>
+  <script>
+    /* 部署在子路径（比如 GitHub Pages 的 /仓库名/）时，自动把首页链接修到仓库根目录 */
+    (function () {
+      var a = document.getElementById("home");
+      var seg = location.pathname.split("/").filter(Boolean);
+      if (location.hostname.indexOf("github.io") > -1 && seg.length > 1) {
+        a.setAttribute("href", "/" + seg[0] + "/");
+      }
+    })();
+  </script>
+</body>
+</html>

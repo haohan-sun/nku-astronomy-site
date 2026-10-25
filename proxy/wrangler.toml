@@ -1,0 +1,15 @@
+name = "anka-proxy"
+main = "worker.js"
+compatibility_date = "2024-11-01"
+
+# 允许的来源：正式站点 + 本地预览。多个用逗号分隔。
+[vars]
+ALLOW_ORIGIN = "https://haohan-sun.github.io,http://127.0.0.1:8811"
+
+# KV：按 IP 限流 + 相同问题 10 分钟内复用回答（省上游额度）
+[[kv_namespaces]]
+binding = "ANKA_CACHE"
+id = "ee78c4640ec14a8ba054b006efd4710c"
+
+# ARK_KEY 不要写在这里。用 secret：
+#   npx wrangler secret put ARK_KEY

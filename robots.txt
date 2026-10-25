@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+# 部署到自己的域名后，可以在这里加上一行：
+# Sitemap: https://你的域名/sitemap.xml
