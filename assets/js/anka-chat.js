@@ -206,7 +206,20 @@
     }).catch(function (err) {
       typing(false);
       var aborted = err && (err.name === "AbortError" || /abort/i.test(String(err.message)));
-      addMsg("bot", aborted ? "等太久啦，网络有点慢，再试一次？" : localAnswer(text));
+      var code = /^http (\d+)$/.exec(String((err && err.message) || ""));
+      if (aborted) {
+        addMsg("bot", "等太久啦，网络有点慢，再试一次？");
+      } else {
+        /* 后端挂了要和「模型答不上来」分开说，不然看不出到底是哪一层的问题 */
+        addMsg("bot", localAnswer(text));
+        setHint(
+          !code ? "AI 后端连不上（网络或代理被挡），下面是本地常见问题答案。"
+            : code[1] === "503" ? "AI 后端暂停服务中，下面是本地常见问题答案。"
+            : code[1] === "429" ? "问得有点快，等一分钟再试；下面是本地常见问题答案。"
+            : "AI 后端返回 " + code[1] + "，下面是本地常见问题答案。",
+          true
+        );
+      }
       history.pop();
     }).then(function () {
       if (timer) clearTimeout(timer);
